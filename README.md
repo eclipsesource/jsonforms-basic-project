@@ -1,6 +1,6 @@
 # Important Notes
 
-- A basic server to test this repository can be found [here](https://github.com/roxhens/jsonforms-basic-server).
+- A basic server to test this repository can be found [here](https://github.com/eclipsesource/jsonforms-basic-server).
 - OpenAPI definition is stored on this [link](https://app.swaggerhub.com/apis/jsonforms-tooling/JSONForms-Tooling-API/1.0.0).
 - ...and a JSON version of the above: [https://api.swaggerhub.com/apis/jsonforms-tooling/JSONForms-Tooling-API/1.0.0]
 #### This project must be generated from [JSONForms Tooling](https://github.com/TheZoker/jsonforms-tooling).
