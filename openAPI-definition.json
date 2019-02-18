@@ -1,0 +1,101 @@
+{
+  "openapi":"3.0.0",
+  "servers":[
+    {"url":"http://localhost"}
+  ],
+  "info":{
+    "description":"This is a mock API for the JSONForms-Tooling project.",
+    "version":"1.0.0",
+    "title":"JSONForms-Tooling API 1.0",
+    "contact":{
+      "email":"munich@eclipsesource.com"
+    },
+    "license":{
+      "name":"MIT"}
+    },
+    "paths":{
+      "/applicants":{
+        "get":{
+          "tags":["applicants"],
+          "summary":"Get all applicants.",
+          "operationId":"getApplicants",
+          "responses":{
+            "200":{
+              "description":"An array of applicants.",
+              "content":{
+                "application/json":{
+                  "schema":{
+                    "$ref":"#/components/schemas/Applicants"
+                  }
+                }
+              }
+            },
+            "400":{
+              "description":"Bad input parameter."
+            },
+            "default":{
+              "description":"Unexpected error."
+            }
+          }
+        },
+        "post":{
+          "tags":["applicants"],
+          "summary":"Adds a new applicant.",
+          "operationId":"addApplicant",
+          "responses":{
+            "201":{
+              "description":"Applicant added."
+            },
+            "400":{
+              "description":"Invalid input."
+            },
+            "409":{
+              "description":"Applicant already exists."
+            }
+          },
+          "requestBody":{
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/Applicant"
+                }
+              }
+            },
+            "description":"Applicant to add."
+          }
+        }
+      }
+    },
+    "components":{
+      "schemas":{
+        "Applicants":{
+          "type":"array",
+          "items":{
+            "$ref":"#/components/schemas/Applicant"
+          }
+        },
+        "Applicant":{
+          "required":["firstName","lastName","matriculationNumber","email"],
+          "properties":{
+            "firstName":{
+              "type":"string",
+              "example":"Doe"
+            },
+            "lastName":{
+              "type":"string",
+              "example":"John"
+            },
+            "matriculationNumber":{
+              "type":"integer",
+              "example":1234567
+            },
+            "email":{
+              "type":"string",
+              "example":"john.doe@tum.de"
+            }
+          },
+          "type":"object"
+        }
+      }
+    }
+  }
