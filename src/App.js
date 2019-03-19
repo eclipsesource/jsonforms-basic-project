@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import ENDPOINT from './vars';
 import './App.css';
-import * as uiSchema from './json-ui-schema';
+import schema from './schema.json';
+import uischema from './uischema.json';
 
 import * as jsonforms from '@jsonforms/core';
 import { JsonForms } from '@jsonforms/react';
@@ -42,16 +43,18 @@ class App extends Component {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: this.props.formData
+      body: this.state.formData
     });
     // Clear the form
-    this.props.formData = {};
+    this.props.resetForm();
     // Display the submitted data in the console (for demonstration purposes)
     console.log('form', this.props.formData);
   };
   
   componentDidMount () {
     // Retrieve the OpenAPI definition from the endpoint in JSON
+    // Retrieve the schemas
+    // Pass the UI Schema and the JSON Schema to create the form controls
     fetch(ENDPOINT)
       .then(response => response.json())
       .then (json => {
@@ -60,10 +63,7 @@ class App extends Component {
           this.setState({
             data: json
           });
-          // Retrieve the UI Schema of the JSON Schema
-          const uiSchemaObj = JSON.parse(JSON.stringify(uiSchema)).default;
-          // Pass the UI Schema and the JSON Schema to create the form controls
-          this.props.init(json.components.schemas.Applicant, uiSchemaObj);
+          this.props.init(schema, uischema);
         }
       });
   }
@@ -71,8 +71,11 @@ class App extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    init: (jsonschema, jsonuischema) => {
-      dispatch(jsonforms.Actions.init({}, jsonschema, jsonuischema));
+    init: (schema, uischema) => {
+      dispatch(jsonforms.Actions.init({}, schema, uischema));
+    },
+    resetForm: () => {
+      dispatch(jsonforms.Actions.update('', () => ({}) ));
     }
   };
 };
